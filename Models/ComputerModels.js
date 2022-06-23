@@ -17,6 +17,7 @@ const computerShema = new Schema(
     pic3: { type: String },
   },
   { versionKey: false }
+  
 );
 
 export default mongoose.model("Computer", computerShema);
