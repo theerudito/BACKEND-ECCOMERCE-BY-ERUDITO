@@ -12,7 +12,7 @@
   "type": "module",
   "devDependencies": {},
   "scripts": {
-    "start": "none app.js",
+    "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "keywords": [],
