@@ -9,7 +9,7 @@ const computerShema = new Schema(
     adictional: { type: String, require: true },
     marc: { type: String, require: true },
     price: { type: String, require: true },
-    priceDesc: {type:  BsonType.Decimal128, require: true },
+    priceDesc: {type:  String, require: true },
     stock: { type: String, require: true },
     desc: { type: String, require: true },
     star: { type: String },
