@@ -4,20 +4,22 @@ const Schema = mongoose.Schema;
 
 const computerShema = new Schema(
   {
-    name: { type: String },
-    description: { type: String },
-    adictional: { type: String },
-    marc: { type: String },
-    price: { type: Number },
-    priceDesc: { type: Number },
-    desc: { type: Number },
+    name: { type: String, require: true },
+    description: { type: String, require: true },
+    adictional: { type: String, require: true },
+    marc: { type: String, require: true },
+    price: { type: Number, require: true },
+    priceDesc: { type: Number, require: true },
+    desc: { type: Number, require: true },
     star: { type: String },
-    pic1: { type: String },
-    pic2: { type: String },
-    pic3: { type: String },
+    pic1: { type: String, require: true },
+    pic2: { type: String, require: true },
+    pic3: { type: String, require: true },
   },
-  { versionKey: false }
-  
+  {
+    timestamps: true,
+    versionKey: false,
+  }
 );
 
 export default mongoose.model("Computer", computerShema);
