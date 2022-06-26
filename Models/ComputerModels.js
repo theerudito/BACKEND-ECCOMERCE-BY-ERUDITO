@@ -10,6 +10,8 @@ const computerShema = new Schema(
     marc: { type: String, require: true },
     price: { type: String, require: true },
     priceDesc: { type: String, require: true },
+    priceTotal: { type: String, require: true },
+    total: { type: String, require: true },
     stock: { type: String, require: true },
     desc: { type: String, require: true },
     star: { type: String },
