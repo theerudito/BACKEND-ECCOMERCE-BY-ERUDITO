@@ -22,7 +22,7 @@ export const getAllUsers = async (req, res) => {
 // };
 // //=======GET ONE USER====================
 
-//=======CREATE USER=====================
+//=======CREATE USER======================
 export const createUser = async (req, res) => {
   // CHECK IF EMAIL EXISTS
   const exitEmail = await Users.findOne({ email: req.body.email });
