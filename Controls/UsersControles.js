@@ -25,22 +25,18 @@ export const getAllUsers = async (req, res) => {
 //=======CREATE USER=====================
 export const createUser = async (req, res) => {
   // CHECK IF EMAIL EXISTS
-
-  const emailExists = await Users.findOne({ email: req.body.email });
-  if (emailExists) {
-    return res.status(400).json({
-      error: true,
-      message: "Email already exists",
-    });
+  const exitEmail = await Users.findOne({ email: req.body.email });
+  if (exitEmail) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Email ya registrado" });
   }
 
   try {
     await Users.create(req.body);
-    res.status(201).json({
-      message: "User created successfully",
-    });
+    res.status(200).json({ message: "Cliente Creado Correctamente" });
   } catch (error) {
-    req.json({ message: error.message });
+    res.json({ message: error.message });
   }
 };
 
