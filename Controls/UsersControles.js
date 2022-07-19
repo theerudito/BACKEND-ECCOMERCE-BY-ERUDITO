@@ -9,6 +9,8 @@ export const getAllUsers = async (req, res) => {
     res.json({ message: error.message });
   }
 };
+
+
 //=======GET ALL USERS===================
 
 // //=======GET ONE USER====================
