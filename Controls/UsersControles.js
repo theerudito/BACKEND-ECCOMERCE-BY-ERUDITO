@@ -1,45 +1,86 @@
 import Users from "../Models/Users.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+const SECRET = process.env.SECRET;
 
-//=======GET ALL USERS===================
-export const getAllUsers = async (req, res) => {
+export const Register = async (req, res) => {
+  const newData = {
+    name: req.body.name,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 10),
+  };
+
   try {
-    const users = await Users.find();
-    res.status(200).json(users);
+    Users.create(newData, (err, user) => {
+      if (err && err.code === 11000) {
+        res.status(400).json({
+          message: "Email already exists",
+        });
+      }
+
+      if (err) return res.status(500).json("Server error");
+
+      const expiresIn = 24 * 60 * 60;
+      const accestoken = jwt.sign({ id: user._id }, SECRET, {
+        expiresIn: expiresIn,
+      });
+
+      const dataUser = {
+        name: user.name,
+        email: user.email,
+        pic: user.pic,
+        accestoken: accestoken,
+        expiresIn: expiresIn,
+      };
+
+      res.send({ dataUser });
+    });
   } catch (error) {
-    res.json({ message: error.message });
+    console.log(error);
   }
 };
 
-
-//=======GET ALL USERS===================
-
-// //=======GET ONE USER====================
-// export const getOneUser = async (req, res) => {
-//   try {
-//     const user = await Users.findById(req.params.id);
-//     res.status(200).json(user);
-//   } catch (error) {
-//     res.json({ message: error.message });
-//   }
-// };
-// //=======GET ONE USER====================
-
-//=======CREATE USER======================
-export const createUser = async (req, res) => {
-  // CHECK IF EMAIL EXISTS
-  const exitEmail = await Users.findOne({ email: req.body.email });
-  if (exitEmail) {
-    return res
-      .status(400)
-      .json({ error: true, message: "Email ya registrado" });
-  }
+export const Login = async (req, res) => {
+  const dataUser = {
+    email: req.body.email,
+    password: req.body.password,
+  };
 
   try {
-    await Users.create(req.body);
-    res.status(200).json({ message: "Cliente Creado Correctamente" });
+    Users.findOne({ email: dataUser.email }, (err, user) => {
+      if (err) return res.status(500).json("Server error");
+
+      if (!user) {
+        res.status(409).send({ message: "Something an wrong" });
+      } else {
+
+        const resultPassword = bcrypt.compareSync(
+          dataUser.password,
+          user.password
+        );
+
+        if (resultPassword) {
+          const expiresIn = 24 * 60 * 60;
+          const accesToken = jwt.sign({ id: user._id }, SECRET, {
+            expiresIn: expiresIn,
+          });
+
+          const datasUser = {
+            name: user.name,
+            email: user.email,
+            accesToken: accesToken,
+            expiresIn: expiresIn,
+          };
+
+          console.log(datasUser);
+
+          res.send({ datasUser });
+        } else {
+          res.status(404).send({ message: "Something an wrong" });
+        }
+      }
+    });
   } catch (error) {
-    res.json({ message: error.message });
+    console.log(error);
   }
 };
-
-//=======CREATE USER=====================
