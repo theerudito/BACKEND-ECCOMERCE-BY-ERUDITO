@@ -72,7 +72,7 @@ export const Login = async (req, res) => {
             expiresIn: expiresIn,
           };
 
-          console.log(datasUser);
+          
 
           res.send({ datasUser });
         } else {
