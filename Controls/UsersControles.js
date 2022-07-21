@@ -41,6 +41,7 @@ export const Register = async (req, res) => {
 };
 
 export const Login = async (req, res) => {
+  console.log(req.body);
   const dataUser = {
     email: req.body.email,
     password: req.body.password,
@@ -53,7 +54,6 @@ export const Login = async (req, res) => {
       if (!user) {
         res.status(409).send({ message: "Something an wrong" });
       } else {
-
         const resultPassword = bcrypt.compareSync(
           dataUser.password,
           user.password
@@ -65,16 +65,14 @@ export const Login = async (req, res) => {
             expiresIn: expiresIn,
           });
 
-          const datasUser = {
+          const dataUser = {
             name: user.name,
             email: user.email,
             accesToken: accesToken,
             expiresIn: expiresIn,
           };
 
-          
-
-          res.send({ datasUser });
+          res.send({ dataUser });
         } else {
           res.status(404).send({ message: "Something an wrong" });
         }
