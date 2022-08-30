@@ -3,6 +3,15 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 const SECRET = process.env.SECRET;
 
+export const AllUsers = async (req, res) => {
+  try {
+    const users = await Users.find();
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const Register = async (req, res) => {
   const newData = {
     name: req.body.name,
@@ -21,7 +30,7 @@ export const Register = async (req, res) => {
       if (err) return res.status(500).json("Server error");
 
       const expiresIn = 24 * 60 * 60;
-      const accestoken = jwt.sign({ id: user._id }, SECRET, {
+      const accesToken = jwt.sign({ id: user._id }, SECRET, {
         expiresIn: expiresIn,
       });
 
@@ -29,7 +38,7 @@ export const Register = async (req, res) => {
         name: user.name,
         email: user.email,
         pic: user.pic,
-        accestoken: accestoken,
+        accesToken: accesTokenn,
         expiresIn: expiresIn,
       };
 
