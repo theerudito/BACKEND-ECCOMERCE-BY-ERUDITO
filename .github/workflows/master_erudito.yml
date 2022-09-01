@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'erudito'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E8EC6540575E43ACAB8D3E25DDFD85B0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_953C073CCC0C432C9468B6546EDF380F }}
           package: .
